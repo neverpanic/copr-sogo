@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      1%{?dist}
+Release:      2%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -358,6 +358,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Tue Feb 07 2023 Clemens Lang <cl@clang.name> - 5.8.0-2
+- Enable automatic requirement finding
+
 * Mon Feb 06 2023 Clemens Lang <cl@clang.name> - 5.8.0-1
 - Fix build in mockbuild 
 - Define undefined macros
