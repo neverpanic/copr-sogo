@@ -16,12 +16,10 @@ Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
 Release:      1%{dist}
-Vendor:       https://www.sogo.nu/
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://github.com/Alinto/sope
 Group:        Development/Libraries/Objective C
-#AutoReqProv:  off
 Source:       %{sope_source}
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -48,7 +46,6 @@ connectivity, and iCalendar parsing.
 %package xml
 Summary:      SOPE libraries for XML processing
 Group:        Development/Libraries/Objective C
-#AutoReqProv:  off
 
 %description xml
 The SOPE libraries for XML processing contain:
@@ -64,7 +61,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      Development files for the SOPE XML libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-xml libxml2-devel
-#AutoReqProv:  off
 
 %description xml-devel
 This package contains the development files of the SOPE XML libraries.
@@ -100,7 +96,6 @@ Project homepage is: http://code.google.com/p/json-framework/
 Summary:      Core libraries of the SOPE application server
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-xml
-#AutoReqProv:  off
 
 %description core
 The SOPE core libraries contain:
@@ -115,7 +110,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      Development files for the SOPE core libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-core
-#AutoReqProv:  off
 
 %description core-devel
 This package contains the header files for the SOPE core
@@ -129,7 +123,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      SOPE libraries for MIME processing
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-core sope%{sope_major_version}%{sope_minor_version}-xml
-#AutoReqProv:  off
 
 %description mime
 The SOPE libraries for MIME processing contain:
@@ -145,7 +138,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      Development files for the SOPE MIME libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-mime
-#AutoReqProv:  off
 
 %description mime-devel
 This package contains the development files of the SOPE
@@ -159,7 +151,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      SOPE application server libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-xml sope%{sope_major_version}%{sope_minor_version}-core sope%{sope_major_version}%{sope_minor_version}-mime
-#AutoReqProv:  off
 
 %description appserver
 The SOPE application server libraries provide:
@@ -179,7 +170,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      Development files for the SOPE application server libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-appserver
-#AutoReqProv:  off
 
 %description appserver-devel
 This package contains the development files for the SOPE application server
@@ -193,7 +183,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      SOPE libraries for LDAP access
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-core sope%{sope_major_version}%{sope_minor_version}-xml
-#AutoReqProv:  off
 
 %description ldap
 The SOPE libraries for LDAP access contain an Objective-C wrapper for
@@ -206,7 +195,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      Development files for the SOPE LDAP libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-ldap
-#AutoReqProv:  off
 
 %description ldap-devel
 This package contains the development files of the SOPE
@@ -220,7 +208,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      GNUstep database libraries for SOPE
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-core sope%{sope_major_version}%{sope_minor_version}-xml
-#AutoReqProv:  off
 
 %description gdl1
 This package contains a fork of the GNUstep database libraries used
@@ -233,7 +220,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      PostgreSQL connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1 postgresql-libs
-#AutoReqProv:  off
 
 %description gdl1-postgresql
 This package contains the PostgreSQL connector for SOPE's fork of the
@@ -246,7 +232,6 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      MySQL connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1
-#AutoReqProv:  off
 
 %description gdl1-mysql
 This package contains the MySQL connector for SOPE's fork of the
@@ -256,7 +241,6 @@ GNUstep database libraries.
 Summary:      Development files for the GNUstep database libraries
 Group:        Development/Libraries/Objective C
 Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1
-#AutoReqProv:  off
 
 %description gdl1-devel
 This package contains the header files for SOPE's fork of the GNUstep
