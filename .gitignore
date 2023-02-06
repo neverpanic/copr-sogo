@@ -1,3 +1,6 @@
 /sope/*.src.rpm
 /sope/results_sope*
 /sope/SOPE-*.tar.gz
+/sogo/*.src.rpm
+/sogo/results_sogo
+/sogo/SOGo-*.tar.gz
