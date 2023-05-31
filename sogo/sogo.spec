@@ -1,6 +1,6 @@
 %define sogo_major_version 5
 %define sogo_minor_version 8
-%define sogo_patch_version 0
+%define sogo_patch_version 3
 %define sogo_version %{sogo_major_version}.%{sogo_minor_version}.%{sogo_patch_version}
 
 %define sope_major_version 4
@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      2%{?dist}
+Release:      1%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -358,6 +358,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Wed May 31 2023 Clemens Lang <cl@clang.name> 5.8.3-1
+- Rebase to 5.8.3 
+
 * Tue Feb 07 2023 Clemens Lang <cl@clang.name> - 5.8.0-2
 - Enable automatic requirement finding
 
