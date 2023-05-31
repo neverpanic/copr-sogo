@@ -1,3 +1,5 @@
+mock.cfg
+results/
 /sope/*.src.rpm
 /sope/results_sope*
 /sope/SOPE-*.tar.gz
