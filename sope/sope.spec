@@ -5,7 +5,7 @@
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_version %{sope_major_version}.%{sope_minor_version}
-%define sope_source https://packages.sogo.nu/sources/SOPE-5.8.0.tar.gz
+%define sope_source https://packages.sogo.nu/sources/SOPE-5.8.3.tar.gz
 
 %define sbjson_version 2.3.1
 %define sbjson_major_version 2
@@ -15,7 +15,7 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
-Release:      1%{dist}
+Release:      2%{dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://github.com/Alinto/sope
@@ -412,7 +412,10 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
-* Mon Feb 06 2023 Clemens Lang <cl@clang.name> - 5.9.0-1.0
+* Wed May 31 2023 Clemens Lang <cl@clang.name> 4.9-2
+- Update to SOPE-5.8.3
+
+* Mon Feb 06 2023 Clemens Lang <cl@clang.name> - 4.9-1
 - Fix build in mockbuild (see https://github.com/Alinto/sope/pull/44)
 - Drop support for RHEL <= 7
 - Define undefined macros
