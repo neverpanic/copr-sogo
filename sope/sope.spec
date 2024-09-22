@@ -412,7 +412,7 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
-* Sun Sep 22 2024 Clemens Lang <cl@clang.name> - 4.9-3
+* Sun Sep 22 2024 Clemens Lang <cl@clang.name> 4.9-3
 - Rebase to SOPE-5.11.0
 
 * Wed May 31 2023 Clemens Lang <cl@clang.name> 4.9-2
