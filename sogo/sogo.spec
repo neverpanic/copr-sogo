@@ -1,6 +1,6 @@
 %define sogo_major_version 5
-%define sogo_minor_version 8
-%define sogo_patch_version 3
+%define sogo_minor_version 11
+%define sogo_patch_version 0
 %define sogo_version %{sogo_major_version}.%{sogo_minor_version}.%{sogo_patch_version}
 
 %define sope_major_version 4
@@ -17,6 +17,7 @@ License:      GPL-2.0+
 URL:          https://www.sogo.nu/
 Group:        Productivity/Groupware
 Source:       https://packages.sogo.nu/sources/SOGo-%{sogo_version}.tar.gz
+Patch:        sogo5.11-wbxml-header-path.patch
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
 Requires(pre): shadow-utils
@@ -41,6 +42,7 @@ BuildRequires: sope%{sope_major_version}%{sope_minor_version}-ldap-devel
 BuildRequires: sope%{sope_major_version}%{sope_minor_version}-mime-devel
 BuildRequires: sope%{sope_major_version}%{sope_minor_version}-sbjson-devel
 BuildRequires: sope%{sope_major_version}%{sope_minor_version}-xml-devel
+BuildRequires: /usr/bin/pkg-config
 
 %define saml2_cfg_opts "--enable-saml2"
 %define mfa_cfg_opts "--enable-mfa"
@@ -143,7 +145,7 @@ SOPE versit parsing library for iCal and VCard formats
 ########################################
 %prep
 rm -fr ${RPM_BUILD_ROOT}
-%setup -q -n SOGo-%{sogo_version}
+%autosetup -p1 -n SOGo-%{sogo_version}
 
 # ****************************** build ********************************
 %build
@@ -358,6 +360,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Sun Sep 22 2024 Clemens Lang <cl@clang.name> 5.11.0-1
+- Rebase to 5.11.0
+
 * Wed May 31 2023 Clemens Lang <cl@clang.name> 5.8.3-1
 - Rebase to 5.8.3 
 
