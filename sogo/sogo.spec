@@ -11,13 +11,12 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      1%{?dist}
+Release:      2%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
 Group:        Productivity/Groupware
 Source:       https://packages.sogo.nu/sources/SOGo-%{sogo_version}.tar.gz
-Patch:        sogo5.11-wbxml-header-path.patch
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
 Requires(pre): shadow-utils
@@ -145,7 +144,13 @@ SOPE versit parsing library for iCal and VCard formats
 ########################################
 %prep
 rm -fr ${RPM_BUILD_ROOT}
-%autosetup -p1 -n SOGo-%{sogo_version}
+%autosetup -n SOGo-%{sogo_version}
+
+# I'd do this with a patch, but tito doesn't support patches:
+# https://github.com/rpm-software-management/tito/issues/446
+sed \
+	-E 's@-I/usr/include/libwbxml-1.0/@$(shell pkg-config --cflags libwbxml2)@' \
+	ActiveSync/GNUmakefile
 
 # ****************************** build ********************************
 %build
@@ -360,6 +365,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-2
+- Move from patchfile to sed expression, since tito does not support patchfiles
+
 * Sun Sep 22 2024 Clemens Lang <cl@clang.name> 5.11.0-1
 - Rebase to 5.11.0
 
