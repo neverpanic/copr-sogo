@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      2%{?dist}
+Release:      3%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -365,6 +365,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-3
+- Bunp release to force COPR reimport
+
 * Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-2
 - Move from patchfile to sed expression, since tito does not support patchfiles
 
