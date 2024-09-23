@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      3%{?dist}
+Release:      4%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -149,8 +149,9 @@ rm -fr ${RPM_BUILD_ROOT}
 # I'd do this with a patch, but tito doesn't support patches:
 # https://github.com/rpm-software-management/tito/issues/446
 sed \
-	-E 's@-I/usr/include/libwbxml-1.0/@$(shell pkg-config --cflags libwbxml2)@' \
-	ActiveSync/GNUmakefile
+    -i -E \
+    's@-I/usr/include/libwbxml-1.0/@$(shell pkg-config --cflags libwbxml2)@' \
+    ActiveSync/GNUmakefile
 
 # ****************************** build ********************************
 %build
@@ -336,7 +337,7 @@ rm -fr ${RPM_BUILD_ROOT}
 %pre
 getent group %{sogo_user} >/dev/null || groupadd -r %{sogo_user}
 getent passwd %{sogo_user} >/dev/null || \
-	useradd -d %{_var}/lib/sogo -c "SOGo daemon" -s /sbin/nologin -M -r -g %sogo_user %sogo_user
+    useradd -d %{_var}/lib/sogo -c "SOGo daemon" -s /sbin/nologin -M -r -g %sogo_user %sogo_user
 
 %post
 # update timestamp on imgs,css,js to let apache know the files changed
@@ -365,6 +366,9 @@ fi
 
 # ********************************* changelog *************************
 %changelog
+* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-4
+- Fix sed expression to actually edit the file in-place
+
 * Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-3
 - Bunp release to force COPR reimport
 
