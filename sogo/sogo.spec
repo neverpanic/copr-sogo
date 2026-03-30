@@ -1,6 +1,6 @@
 %define sogo_major_version 5
-%define sogo_minor_version 11
-%define sogo_patch_version 0
+%define sogo_minor_version 12
+%define sogo_patch_version 7
 %define sogo_version %{sogo_major_version}.%{sogo_minor_version}.%{sogo_patch_version}
 
 %define sope_major_version 4
@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      4%{?dist}
+Release:      0%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -202,6 +202,8 @@ make \
     LDFLAGS="$ldflags" \
     ADDITIONAL_OBJCFLAGS="%{optflags}" \
     ADDITIONAL_CFLAGS="%{optflags}" \
+    SOGO_ADMIN_TOOLS="${RPM_BUILD_ROOT}%{_sbindir}" \
+    messages=yes \
     install
 
 install -d ${RPM_BUILD_ROOT}/usr/lib/systemd/system/
@@ -261,6 +263,7 @@ rm -fr ${RPM_BUILD_ROOT}
 %{_sbindir}/sogod
 %{_libdir}/sogo/libSOGo.so*
 %{_libdir}/sogo/libSOGoUI.so*
+%{_libdir}/GNUstep/SOGo/API.SOGo
 %{_libdir}/GNUstep/SOGo/AdministrationUI.SOGo
 %{_libdir}/GNUstep/SOGo/Appointments.SOGo
 %{_libdir}/GNUstep/SOGo/CommonUI.SOGo
@@ -366,13 +369,16 @@ fi
 
 # ********************************* changelog *************************
 %changelog
-* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-4
+* Tue Mar 31 2026 Clemens Lang <cl@clang.name> 5.12.7-0
+- Update to SOGo 5.12.7
+
+* Mon Sep 23 2024 Clemens Lang <cl@clang.name> 5.11.0-4
 - Fix sed expression to actually edit the file in-place
 
-* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-3
+* Mon Sep 23 2024 Clemens Lang <cl@clang.name> 5.11.0-3
 - Bunp release to force COPR reimport
 
-* Mon Sep 23 2024 Clemens Lang <cllang@redhat.com> 5.11.0-2
+* Mon Sep 23 2024 Clemens Lang <cl@clang.name> 5.11.0-2
 - Move from patchfile to sed expression, since tito does not support patchfiles
 
 * Sun Sep 22 2024 Clemens Lang <cl@clang.name> 5.11.0-1
