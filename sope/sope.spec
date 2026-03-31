@@ -15,7 +15,7 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
-Release:      4%{dist}
+Release:      5%{dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://github.com/Alinto/sope
@@ -23,6 +23,7 @@ Group:        Development/Libraries/Objective C
 Source:       %{sope_source}
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires: patchelf
 BuildRequires: gcc-objc
 BuildRequires: gnustep-base
 BuildRequires: gnustep-base-devel
@@ -219,7 +220,7 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 %package gdl1-postgresql
 Summary:      PostgreSQL connector for SOPE's fork of the GNUstep database environment
 Group:        Development/Libraries/Objective C
-Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1 postgresql-libs
+Requires:     sope%{sope_major_version}%{sope_minor_version}-gdl1
 
 %description gdl1-postgresql
 This package contains the PostgreSQL connector for SOPE's fork of the
@@ -290,6 +291,12 @@ make %{sope_makeflags} \
     DESTDIR=${RPM_BUILD_ROOT} \
     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
     install
+
+# Fix a problem where PostgreSQL.gdladaptor doesn't link against libpq.so.5 for
+# some reason, causing an undefined symbol when attempting to use it.
+patchelf \
+   --add-needed libpq.so.5 \
+   ${RPM_BUILD_ROOT}%{_libdir}/GNUstep/GDLAdaptors-%{sope_version}/PostgreSQL.gdladaptor/PostgreSQL
 
 cd sope-gdl1/MySQL
 make %{sope_makeflags} \
@@ -412,6 +419,9 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Tue Mar 31 2026 Clemens Lang <cl@clang.name> 4.9-5
+- Add a missing DT_NEEDED on libpq.so.5 to PostgreSQL.gdladaptor
+
 * Mon Mar 30 2026 Clemens Lang <cl@clang.name> 4.9-4
 - Rebase to SOPE-5.12.7
 
