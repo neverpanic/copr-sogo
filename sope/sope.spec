@@ -15,7 +15,7 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
-Release:      5%{dist}
+Release:      6%{dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://github.com/Alinto/sope
@@ -23,7 +23,6 @@ Group:        Development/Libraries/Objective C
 Source:       %{sope_source}
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: patchelf
 BuildRequires: gcc-objc
 BuildRequires: gnustep-base
 BuildRequires: gnustep-base-devel
@@ -35,6 +34,7 @@ BuildRequires: mariadb-devel
 BuildRequires: openldap-devel
 BuildRequires: openssl-devel
 BuildRequires: postgresql-devel
+BuildRequires: libpq-devel
 
 %description
 SOPE is an extensive set of frameworks which form a complete Web application
@@ -292,12 +292,6 @@ make %{sope_makeflags} \
     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
     install
 
-# Fix a problem where PostgreSQL.gdladaptor doesn't link against libpq.so.5 for
-# some reason, causing an undefined symbol when attempting to use it.
-patchelf \
-   --add-needed libpq.so.5 \
-   ${RPM_BUILD_ROOT}%{_libdir}/GNUstep/GDLAdaptors-%{sope_version}/PostgreSQL.gdladaptor/PostgreSQL
-
 cd sope-gdl1/MySQL
 make %{sope_makeflags} \
     DESTDIR=${RPM_BUILD_ROOT} \
@@ -419,6 +413,10 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Tue May 05 2026 Clemens Lang <cl@clang.name> 4.9-6
+- Add missing build dependency to provide pg_config executable
+- Revert patchelf call that is no longer necessary
+
 * Tue Mar 31 2026 Clemens Lang <cl@clang.name> 4.9-5
 - Add a missing DT_NEEDED on libpq.so.5 to PostgreSQL.gdladaptor
 
