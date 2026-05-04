@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      1%{?dist}
+Release:      2%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -42,6 +42,7 @@ BuildRequires: sope%{sope_major_version}%{sope_minor_version}-mime-devel
 BuildRequires: sope%{sope_major_version}%{sope_minor_version}-sbjson-devel
 BuildRequires: sope%{sope_major_version}%{sope_minor_version}-xml-devel
 BuildRequires: /usr/bin/pkg-config
+BuildRequires: systemd-rpm-macros
 
 %define saml2_cfg_opts "--enable-saml2"
 %define mfa_cfg_opts "--enable-mfa"
@@ -346,16 +347,19 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # **************************** pkgscripts *****************************
 %post
-systemctl daemon-reload
+%systemd_post sogod.service
 
 %preun
-if [ "$1" == "0" ]; then
-    systemctl disable sogod
-    systemctl stop sogod > /dev/null 2>&1
-fi
+%systemd_preun sogod.service
+
+%postun
+%systemd_postun_with_restart sogod.service
 
 # ********************************* changelog *************************
 %changelog
+* Mon May 04 2026 Clemens Lang <cl@clang.name> 5.12.7-2
+- Switch to RPM macros to handle systemd units
+
 * Mon May 04 2026 Clemens Lang <cl@clang.name> 5.12.7-1
 - Switch to sysusers.d, see https://fedoraproject.org/wiki/Changes/RPMSuportForSystemdSysusers
 - Don't autostart sogo on install
