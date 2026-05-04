@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      0%{?dist}
+Release:      1%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -244,6 +244,12 @@ rm -rf ${RPM_BUILD_ROOT}%{_bindir}/test_quick_extract
     ADDITIONAL_CFLAGS="%{optflags}" \
     install)
 
+# systemd sysusers.d, see https://fedoraproject.org/wiki/Changes/RPMSuportForSystemdSysusers
+mkdir -p ${RPM_BUILD_ROOT}/%{_sysusersdir}
+cat << EOF > ${RPM_BUILD_ROOT}/%{_sysusersdir}/%{name}.conf
+u %{sogo_user} - "SOGo daemon" %{_var}/lib/sogo
+EOF
+
 # ****************************** clean ********************************
 %clean
 rm -fr ${RPM_BUILD_ROOT}
@@ -284,6 +290,8 @@ rm -fr ${RPM_BUILD_ROOT}
 %{_libdir}/GNUstep/SOGo/WebServerResources
 %{_libdir}/GNUstep/OCSTypeModels
 %{_libdir}/GNUstep/WOxElemBuilders-*
+
+%{_sysusersdir}/%{name}.conf
 
 %config(noreplace) %{_libdir}/GNUstep/SOGo/WebServerResources/css/theme-default.css
 %config(noreplace) %attr(0640, root, %sogo_user) %{_sysconfdir}/sogo/sogo.conf
@@ -337,20 +345,8 @@ rm -fr ${RPM_BUILD_ROOT}
 %{_libdir}/sogo/libNGCards.so*
 
 # **************************** pkgscripts *****************************
-%pre
-getent group %{sogo_user} >/dev/null || groupadd -r %{sogo_user}
-getent passwd %{sogo_user} >/dev/null || \
-    useradd -d %{_var}/lib/sogo -c "SOGo daemon" -s /sbin/nologin -M -r -g %sogo_user %sogo_user
-
 %post
-# update timestamp on imgs,css,js to let apache know the files changed
-#find %{_libdir}/GNUstep/SOGo/WebServerResources  -exec touch {} \;
-# make shells scripts in documentation directory executable
-#find %{_docdir}/ -name '*.sh' -exec chmod a+x {} \;
-
 systemctl daemon-reload
-systemctl enable sogod
-systemctl try-restart sogod > /dev/null 2>&1
 
 %preun
 if [ "$1" == "0" ]; then
@@ -358,17 +354,13 @@ if [ "$1" == "0" ]; then
     systemctl stop sogod > /dev/null 2>&1
 fi
 
-%postun
-if [ "$1" = "0" ]; then
-    /usr/sbin/userdel %sogo_user
-    /usr/sbin/groupdel %sogo_user > /dev/null 2>&1
-    /bin/rm -rf %{_var}/run/sogo
-    /bin/rm -rf %{_var}/spool/sogo
-    # not removing /var/lib/sogo to keep .GNUstepDefaults
-fi
-
 # ********************************* changelog *************************
 %changelog
+* Mon May 04 2026 Clemens Lang <cl@clang.name> 5.12.7-1
+- Switch to sysusers.d, see https://fedoraproject.org/wiki/Changes/RPMSuportForSystemdSysusers
+- Don't autostart sogo on install
+- Don't clean up as hard on uninstall
+
 * Tue Mar 31 2026 Clemens Lang <cl@clang.name> 5.12.7-0
 - Update to SOGo 5.12.7
 
