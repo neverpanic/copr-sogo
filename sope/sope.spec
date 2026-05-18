@@ -5,7 +5,7 @@
 %define sope_major_version 4
 %define sope_minor_version 9
 %define sope_version %{sope_major_version}.%{sope_minor_version}
-%define sope_source https://packages.sogo.nu/sources/SOPE-5.12.7.tar.gz
+%define sope_source https://packages.sogo.nu/sources/SOPE-5.12.8.tar.gz
 
 %define sbjson_version 2.3.1
 %define sbjson_major_version 2
@@ -15,7 +15,7 @@
 Summary:      SOPE
 Name:         sope%{sope_major_version}%{sope_minor_version}
 Version:      %{sope_version}
-Release:      6%{dist}
+Release:      7%{dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://github.com/Alinto/sope
@@ -413,6 +413,9 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Mon May 18 2026 Clemens Lang <cl@clang.name> 4.9-7
+- Rebase to SOPE-5.12.8
+
 * Tue May 05 2026 Clemens Lang <cl@clang.name> 4.9-6
 - Add missing build dependency to provide pg_config executable
 - Revert patchelf call that is no longer necessary
