@@ -1,6 +1,6 @@
 %define sogo_major_version 5
 %define sogo_minor_version 12
-%define sogo_patch_version 7
+%define sogo_patch_version 8
 %define sogo_version %{sogo_major_version}.%{sogo_minor_version}.%{sogo_patch_version}
 
 %define sope_major_version 4
@@ -11,7 +11,7 @@
 Summary:      SOGo
 Name:         sogo
 Version:      %{sogo_version}
-Release:      2%{?dist}
+Release:      0%{?dist}
 Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
@@ -357,6 +357,10 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Mon May 18 2026 Clemens Lang <cl@clang.name> 5.12.8-0
+- Fix 2 XSS injections, 1 SQL injection, and 1 impersonation with untrusted user source
+  See https://www.sogo.nu/news/2026/sogo-v5128-released.html
+
 * Mon May 04 2026 Clemens Lang <cl@clang.name> 5.12.7-2
 - Switch to RPM macros to handle systemd units
 
