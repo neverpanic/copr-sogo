@@ -1,0 +1,44 @@
+From 07c58afc704610ec0c59aba617e98aea64de8a82 Mon Sep 17 00:00:00 2001
+From: Clemens Lang <neverpanic@gmail.com>
+Date: Fri, 4 Sep 2026 17:13:47 +0200
+Subject: [PATCH] fix(mail): Fix compiling against OpenSSL 4.x
+
+See https://openssl-library.org/post/2026-04-13-asn1_string/. The new
+code is what PKCS7_get_smimecap also does.
+
+Signed-off-by: Clemens Lang <neverpanic@gmail.com>
+---
+ SoObjects/Mailer/NSData+SMIME.m | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/SoObjects/Mailer/NSData+SMIME.m b/SoObjects/Mailer/NSData+SMIME.m
+index ed14f20a8..46dee84d9 100644
+--- a/SoObjects/Mailer/NSData+SMIME.m
++++ b/SoObjects/Mailer/NSData+SMIME.m
+@@ -596,6 +596,7 @@ STACK_OF(X509_ALGOR) *CMS_get_smimecap(CMS_SignerInfo *si)
+     X509_ATTRIBUTE *attr;
+     ASN1_TYPE *cap;
+     const unsigned char *p;
++    size_t len;
+ 
+     attr = CMS_signed_get_attr(si, CMS_signed_get_attr_by_NID(si, NID_SMIMECapabilities, -1));
+     if (!attr)
+@@ -603,10 +604,12 @@ STACK_OF(X509_ALGOR) *CMS_get_smimecap(CMS_SignerInfo *si)
+     cap = X509_ATTRIBUTE_get0_type(attr, 0);
+     if (!cap || (cap->type != V_ASN1_SEQUENCE))
+        return NULL;
+-    p = cap->value.sequence->data;
++    p = ASN1_STRING_get0_data(cap->value.sequence);
++    len = ASN1_STRING_get_length(cap->value.sequence);
++    if (len > INT_MAX)
++        return NULL;
+     return (STACK_OF(X509_ALGOR) *)
+-        ASN1_item_d2i(NULL, &p, cap->value.sequence->length,
+-                      ASN1_ITEM_rptr(X509_ALGORS));
++        ASN1_item_d2i(NULL, &p, (int)len, ASN1_ITEM_rptr(X509_ALGORS));
+ }
+ 
+ - (NSArray *) algosFromCMS
+-- 
+2.55.0
+

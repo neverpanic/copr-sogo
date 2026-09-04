@@ -1,6 +1,6 @@
 %define sogo_major_version 5
 %define sogo_minor_version 12
-%define sogo_patch_version 8
+%define sogo_patch_version 10
 %define sogo_version %{sogo_major_version}.%{sogo_minor_version}.%{sogo_patch_version}
 
 %define sope_major_version 4
@@ -16,7 +16,10 @@ Packager:     Clemens Lang <cl@clang.name>
 License:      GPL-2.0+
 URL:          https://www.sogo.nu/
 Group:        Productivity/Groupware
-Source:       https://packages.sogo.nu/sources/SOGo-%{sogo_version}.tar.gz
+Source0:      https://packages.sogo.nu/sources/SOGo-%{sogo_version}.tar.gz
+# See https://github.com/rpm-software-management/tito/issues/446 for why this hack is necessary
+Source1:      0001-fix-mail-Fix-compiling-against-OpenSSL-4.x.patch
+Patch0:       0001-fix-mail-Fix-compiling-against-OpenSSL-4.x.patch
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
 Requires(pre): shadow-utils
@@ -145,7 +148,7 @@ SOPE versit parsing library for iCal and VCard formats
 ########################################
 %prep
 rm -fr ${RPM_BUILD_ROOT}
-%autosetup -n SOGo-%{sogo_version}
+%autosetup -n SOGo-%{sogo_version} -p1
 
 # I'd do this with a patch, but tito doesn't support patches:
 # https://github.com/rpm-software-management/tito/issues/446
@@ -357,6 +360,10 @@ rm -fr ${RPM_BUILD_ROOT}
 
 # ********************************* changelog *************************
 %changelog
+* Fri Sep 04 2026 Clemens Lang <cl@clang.name> 5.12.10-0
+- Fix one XSS injection, one SQL injection, one SSRF and a shell injection when using sendmail
+  See https://www.sogo.nu/news/2026/sogo-v51210-released.html
+
 * Mon May 18 2026 Clemens Lang <cl@clang.name> 5.12.8-0
 - Fix 2 XSS injections, 1 SQL injection, and 1 impersonation with untrusted user source
   See https://www.sogo.nu/news/2026/sogo-v5128-released.html
