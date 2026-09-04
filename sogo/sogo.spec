@@ -18,8 +18,7 @@ URL:          https://www.sogo.nu/
 Group:        Productivity/Groupware
 Source0:      https://packages.sogo.nu/sources/SOGo-%{sogo_version}.tar.gz
 # See https://github.com/rpm-software-management/tito/issues/446 for why this hack is necessary
-Source1:      0001-fix-mail-Fix-compiling-against-OpenSSL-4.x.patch
-Patch0:       0001-fix-mail-Fix-compiling-against-OpenSSL-4.x.patch
+Patch0:       https://raw.githubusercontent.com/neverpanic/copr-sogo/refs/tags/%{name}-%{sogo_version}-0/%{name}/0001-fix-mail-Fix-compiling-against-OpenSSL-4.x.patch
 Prefix:       /usr
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}
 Requires(pre): shadow-utils
